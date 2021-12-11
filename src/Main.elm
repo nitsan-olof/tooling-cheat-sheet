@@ -4,6 +4,7 @@ import Browser
 import Html exposing (Html, a, button, div, h1, input, span, text)
 import Html.Attributes exposing (class, href, placeholder, style, value)
 import Html.Events exposing (onClick, onInput)
+import Set exposing (..)
 
 
 main =
@@ -86,11 +87,24 @@ view model =
                     []
                 ]
 
+        allTags =
+            let
+                accumulatedTags =
+                    List.concat (List.map (\kata -> kata.tags) model.katas)
+
+                uniqueTags =
+                    Set.fromList accumulatedTags
+            in
+            Set.toList uniqueTags
+
         tags =
-            div [] [ text "Known tags" ]
+            div []
+                [ text "Known tags"
+                , div [] (List.map viewTag allTags)
+                ]
 
         katasList =
-            div [] (List.map viewKata model.katas)
+            div [] (List.map viewKata (List.sortBy (\kata -> kata.title) model.katas))
     in
     div []
         [ searchBar
