@@ -37,6 +37,18 @@ init =
           , tags = [ "Java", "Approvals" ]
           , title = "RPG Combat"
           }
+        , { url = "https://github.com/objarni/TestDataBuilderKata"
+          , tags = [ "C" ]
+          , title = "Test data builder"
+          }
+        , { url = "https://github.com/objarni/AlarmClockKata"
+          , tags = [ "C" ]
+          , title = "Alarm Clock (aka Timer Expiry)"
+          }
+        , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
+          , tags = [ "C++", "C", "Go", "Java", "Groovy", "C#" ]
+          , title = "Tennis Score"
+          }
         ]
     }
 
