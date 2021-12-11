@@ -1,8 +1,8 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, button, div, h1, input, span, text)
-import Html.Attributes exposing (placeholder, value)
+import Html exposing (Html, a, button, div, h1, input, span, text)
+import Html.Attributes exposing (class, href, placeholder, style, value)
 import Html.Events exposing (onClick, onInput)
 
 
@@ -13,12 +13,32 @@ main =
 type alias Model =
     { value : Int
     , searchBarContent : String
+    , katas : List Kata
+    }
+
+
+type alias Kata =
+    { url : String
+    , tags : List String
+    , title : String
     }
 
 
 init : Model
 init =
-    { value = 10, searchBarContent = "" }
+    { value = 10
+    , searchBarContent = ""
+    , katas =
+        [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
+          , tags = [ "C", "R", "Smalltalk", "Java", "Delphi" ]
+          , title = "Gilded Rose"
+          }
+        , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
+          , tags = [ "Java", "Approvals" ]
+          , title = "RPG Combat"
+          }
+        ]
+    }
 
 
 type Msg
@@ -56,6 +76,9 @@ view model =
 
         tags =
             div [] [ text "Known tags" ]
+
+        katasList =
+            div [] (List.map viewKata model.katas)
     in
     div []
         [ searchBar
@@ -65,4 +88,20 @@ view model =
             [ text "-" ]
         , h1 [] [ text (String.fromInt model.value) ]
         , button [ onClick Increment ] [ text "+" ]
+        , katasList
+        ]
+
+
+viewTag tag =
+    span [ class "tag" ] [ text tag ]
+
+
+viewMarkedTag tag =
+    span [ class "marked-tag" ] [ text tag ]
+
+
+viewKata kata =
+    div [ class "kata" ]
+        [ a [ href kata.url, class "kata-title" ] [ text kata.title ]
+        , div [] (List.map viewTag kata.tags)
         ]
