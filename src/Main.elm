@@ -11,12 +11,14 @@ main =
 
 
 type alias Model =
-    Int
+    { value : Int
+    , searchBarContent : String
+    }
 
 
 init : Model
 init =
-    10
+    { value = 10, searchBarContent = "" }
 
 
 type Msg
@@ -29,13 +31,13 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         Increment ->
-            model + 1
+            { model | value = model.value + 1 }
 
         Decrement ->
-            model - 1
+            { model | value = model.value - 1 }
 
         SearchBarChange s ->
-            model
+            { model | searchBarContent = s }
 
 
 view : Model -> Html Msg
@@ -44,7 +46,12 @@ view model =
         searchBar =
             div []
                 [ text "Search bar"
-                , input [ placeholder "Search for kata", value "", onInput SearchBarChange ] []
+                , input
+                    [ placeholder "Search for kata"
+                    , value model.searchBarContent
+                    , onInput SearchBarChange
+                    ]
+                    []
                 ]
 
         tags =
@@ -55,7 +62,7 @@ view model =
         , tags
         , button
             [ onClick Decrement ]
-            [ text "Inc" ]
-        , h1 [] [ text (String.fromInt model) ]
-        , button [ onClick Increment ] [ text "Dec" ]
+            [ text "-" ]
+        , h1 [] [ text (String.fromInt model.value) ]
+        , button [ onClick Increment ] [ text "+" ]
         ]
