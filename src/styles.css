@@ -1,27 +1,32 @@
 h1 {
-  color: darkgoldenrod;
+  color: green;
   font-family: cursive;
 }
+a {
+  color: black;
+}
 .tag {
-  color: #ff00ff;
-  border-color: rosybrown;
+  color: green;
+  border-color: dimgray;
   border-width: thin;
   border-style: solid;
   padding: 3px;
   margin:  2px;
 }
 .marked-tag {
-  background-color: rosybrown;
-  border-color: black;
-  color: white;
+  background-color: lightgreen;
+  border-color: dimgray;
+  color: green;
   border-width: thin;
   border-style: solid;
   padding: 3px;
-  margin:  2px;
 }
 .kata {
-  margin: 20px;
+  padding: 10px;
 }
 .kata-title {
   font-size: x-large;
+}
+div {
+  margin:  5px;
 }

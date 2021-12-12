@@ -12,8 +12,7 @@ main =
 
 
 type alias Model =
-    { value : Int
-    , searchBarContent : String
+    { searchBarContent : String
     , katas : List Kata
     }
 
@@ -27,8 +26,7 @@ type alias Kata =
 
 init : Model
 init =
-    { value = 10
-    , searchBarContent = ""
+    { searchBarContent = ""
     , katas =
         [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
           , tags = [ "C", "R", "Smalltalk", "Java", "Delphi" ]
@@ -55,20 +53,12 @@ init =
 
 
 type Msg
-    = Increment
-    | Decrement
-    | SearchBarChange String
+    = SearchBarChange String
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Increment ->
-            { model | value = model.value + 1 }
-
-        Decrement ->
-            { model | value = model.value - 1 }
-
         SearchBarChange s ->
             { model | searchBarContent = s }
 
@@ -78,13 +68,13 @@ view model =
     let
         searchBar =
             div []
-                [ text "Search bar"
-                , input
+                [ input
                     [ placeholder "Search for kata"
                     , value model.searchBarContent
                     , onInput SearchBarChange
                     ]
                     []
+                , button [] [ text "Search" ]
                 ]
 
         allTags =
@@ -99,9 +89,7 @@ view model =
 
         tags =
             div []
-                [ text "Known tags"
-                , div [] (List.map viewTag allTags)
-                ]
+                [ div [] (List.map viewMarkedTag allTags) ]
 
         katasList =
             div [] (List.map viewKata (List.sortBy (\kata -> kata.title) model.katas))
@@ -109,11 +97,6 @@ view model =
     div []
         [ searchBar
         , tags
-        , button
-            [ onClick Decrement ]
-            [ text "-" ]
-        , h1 [] [ text (String.fromInt model.value) ]
-        , button [ onClick Increment ] [ text "+" ]
         , katasList
         ]
 
@@ -129,5 +112,5 @@ viewMarkedTag tag =
 viewKata kata =
     div [ class "kata" ]
         [ a [ href kata.url, class "kata-title" ] [ text kata.title ]
-        , div [] (List.map viewTag kata.tags)
+        , span [] (List.map viewTag kata.tags)
         ]
