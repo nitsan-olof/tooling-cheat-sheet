@@ -12,6 +12,7 @@ a {
   border-style: solid;
   padding: 3px;
   margin:  2px;
+  cursor:  pointer;
 }
 .marked-tag {
   background-color: lightgreen;
@@ -20,6 +21,7 @@ a {
   border-width: thin;
   border-style: solid;
   padding: 3px;
+  cursor:  pointer;
 }
 .kata {
   padding: 10px;
