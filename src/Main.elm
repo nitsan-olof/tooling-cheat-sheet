@@ -20,7 +20,7 @@ type alias Model =
 
 type alias Kata =
     { url : String
-    , tags : List String
+    , tags : Set String
     , title : String
     }
 
@@ -30,23 +30,23 @@ init =
     { searchBarContent = ""
     , katas =
         [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
-          , tags = [ "C", "R", "Smalltalk", "Java", "Delphi" ]
+          , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
           , title = "Gilded Rose"
           }
         , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
-          , tags = [ "Java", "Approvals" ]
+          , tags = Set.fromList [ "Java", "Approvals" ]
           , title = "RPG Combat"
           }
         , { url = "https://github.com/objarni/TestDataBuilderKata"
-          , tags = [ "C" ]
+          , tags = Set.fromList [ "C" ]
           , title = "Test data builder"
           }
         , { url = "https://github.com/objarni/AlarmClockKata"
-          , tags = [ "C" ]
+          , tags = Set.fromList [ "C" ]
           , title = "Alarm Clock (aka Timer Expiry)"
           }
         , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
-          , tags = [ "C++", "C", "Go", "Java", "Groovy", "C#" ]
+          , tags = Set.fromList [ "C++", "C", "Go", "Java", "Groovy", "C#" ]
           , title = "Tennis Score"
           }
         ]
@@ -88,7 +88,7 @@ view model =
         allTags =
             let
                 accumulatedTags =
-                    List.concat (List.map (\kata -> kata.tags) model.katas)
+                    List.concat (List.map (\kata -> (Set.toList kata.tags)) model.katas)
 
                 uniqueTags =
                     Set.fromList accumulatedTags
@@ -101,14 +101,14 @@ view model =
 
         shouldShow : Kata -> Bool
         shouldShow kata = 
-            let kataTags = Set.fromList kata.tags
+            let kataTags = kata.tags
             in
-            not (Set.isEmpty (Set.intersect kataTags model.activeTags))
+            Set.isEmpty (Set.diff model.activeTags kataTags)
 
         visibleKatas = List.filter shouldShow model.katas
 
         katasList =
-            div [] (List.map viewKata (List.sortBy (\kata -> kata.title) visibleKatas))
+            div [] (List.map viewKata visibleKatas)
     in
     div []
         [ searchBar
@@ -135,5 +135,5 @@ viewMarkedTag tag =
 viewKata kata =
     div [ class "kata" ]
         [ a [ href kata.url, class "kata-title" ] [ text kata.title ]
-        , span [] (List.map viewUnmarkedTag kata.tags)
+        , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
