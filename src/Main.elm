@@ -14,6 +14,7 @@ main =
 type alias Model =
     { searchBarContent : String
     , katas : List Kata
+    , activeTags : Set String
     }
 
 
@@ -49,6 +50,7 @@ init =
           , title = "Tennis Score"
           }
         ]
+    , activeTags = Set.empty |> Set.insert "C" |> Set.insert "Delphi"
     }
 
 
@@ -89,7 +91,7 @@ view model =
 
         tags =
             div []
-                [ div [] (List.map viewMarkedTag allTags) ]
+                [ div [] (List.map (\tag -> viewTag tag  model.activeTags) allTags) ]
 
         katasList =
             div [] (List.map viewKata (List.sortBy (\kata -> kata.title) model.katas))
@@ -100,8 +102,14 @@ view model =
         , katasList
         ]
 
+viewTag : String -> Set String -> Html msg
+viewTag tag activeTags =
+    if Set.member tag activeTags then
+        viewMarkedTag tag
+    else
+        viewUnmarkedTag tag
 
-viewTag tag =
+viewUnmarkedTag tag =
     span [ class "tag" ] [ text tag ]
 
 
@@ -112,5 +120,5 @@ viewMarkedTag tag =
 viewKata kata =
     div [ class "kata" ]
         [ a [ href kata.url, class "kata-title" ] [ text kata.title ]
-        , span [] (List.map viewTag kata.tags)
+        , span [] (List.map viewUnmarkedTag kata.tags)
         ]
