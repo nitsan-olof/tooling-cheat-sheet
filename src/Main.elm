@@ -119,7 +119,7 @@ viewUnmarkedTag tag =
 
 
 viewMarkedTag tag =
-    span [ class "marked-tag" ] [ text tag ]
+    span [ class "tag highlight" ] [ text tag ]
 
 
 viewKata kata =

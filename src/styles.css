@@ -14,14 +14,9 @@ a {
   margin:  2px;
   cursor:  pointer;
 }
-.marked-tag {
+.highlight {
   background-color: lightgreen;
   border-color: dimgray;
-  color: green;
-  border-width: thin;
-  border-style: solid;
-  padding: 3px;
-  cursor:  pointer;
 }
 .kata {
   padding: 10px;
