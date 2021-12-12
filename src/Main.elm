@@ -57,7 +57,7 @@ init =
 type Msg
     = SearchBarChange String
     | ActivateTag String
-    --| DeactivateTag String
+    | DeactivateTag String
 
 
 update : Msg -> Model -> Model
@@ -67,6 +67,8 @@ update msg model =
             { model | searchBarContent = s }
         ActivateTag tag ->
             { model | activeTags = Set.insert tag model.activeTags}
+        DeactivateTag tag ->
+            { model | activeTags = Set.remove tag model.activeTags}
 
 
 view : Model -> Html Msg
@@ -119,7 +121,7 @@ viewUnmarkedTag tag =
 
 
 viewMarkedTag tag =
-    span [ class "tag highlight" ] [ text tag ]
+    span [ class "tag highlight", onClick (DeactivateTag tag) ] [ text tag ]
 
 
 viewKata kata =
