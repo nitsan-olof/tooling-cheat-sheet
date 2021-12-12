@@ -56,6 +56,8 @@ init =
 
 type Msg
     = SearchBarChange String
+    | ActivateTag String
+    --| DeactivateTag String
 
 
 update : Msg -> Model -> Model
@@ -63,6 +65,8 @@ update msg model =
     case msg of
         SearchBarChange s ->
             { model | searchBarContent = s }
+        ActivateTag tag ->
+            { model | activeTags = Set.insert tag model.activeTags}
 
 
 view : Model -> Html Msg
@@ -102,15 +106,16 @@ view model =
         , katasList
         ]
 
-viewTag : String -> Set String -> Html msg
+viewTag : String -> Set String -> Html Msg
 viewTag tag activeTags =
     if Set.member tag activeTags then
         viewMarkedTag tag
     else
         viewUnmarkedTag tag
 
+viewUnmarkedTag : String -> Html Msg
 viewUnmarkedTag tag =
-    span [ class "tag" ] [ text tag ]
+    span [ class "tag", onClick (ActivateTag tag) ] [ text tag ]
 
 
 viewMarkedTag tag =
