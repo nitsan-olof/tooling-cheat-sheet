@@ -1,6 +1,7 @@
 h1 {
   color: green;
   font-family: cursive;
+  font-size: xx-large;
 }
 a {
   color: black;
@@ -21,7 +22,7 @@ a {
   padding: 10px;
 }
 .kata-title {
-  font-size: x-large;
+  font-size: large;
 }
 div {
   margin:  5px;

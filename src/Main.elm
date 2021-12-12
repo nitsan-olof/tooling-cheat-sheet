@@ -99,8 +99,16 @@ view model =
             div []
                 [ div [] (List.map (\tag -> viewTag tag  model.activeTags) allTags) ]
 
+        shouldShow : Kata -> Bool
+        shouldShow kata = 
+            let kataTags = Set.fromList kata.tags
+            in
+            not (Set.isEmpty (Set.intersect kataTags model.activeTags))
+
+        visibleKatas = List.filter shouldShow model.katas
+
         katasList =
-            div [] (List.map viewKata (List.sortBy (\kata -> kata.title) model.katas))
+            div [] (List.map viewKata (List.sortBy (\kata -> kata.title) visibleKatas))
     in
     div []
         [ searchBar
