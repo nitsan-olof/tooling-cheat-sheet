@@ -97,7 +97,8 @@ view model =
 
         tags =
             div []
-                [ div [] (List.map (\tag -> viewTag tag  model.activeTags) allTags) ]
+                [ text "Filter by tag:"
+                , div [] (List.map (\tag -> viewTag tag  model.activeTags) allTags) ]
 
         shouldShow : Kata -> Bool
         shouldShow kata = 
