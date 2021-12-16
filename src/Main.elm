@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (Html, a, button, div, h1, input, span, text)
-import Html.Attributes as Attr exposing (class, placeholder, size, style, value)
+import Html.Attributes as Attr exposing (class, placeholder, size, style, target, value)
 import Html.Events exposing (onClick, onInput)
 import Set exposing (..)
 
@@ -41,7 +41,7 @@ init =
           }
         , { url = "https://github.com/objarni/TestDataBuilderKata"
           , tags = Set.fromList [ "C" ]
-          , title = "Test data builder"
+          , title = "Channel - Test Data Builder in C"
           }
         , { url = "https://github.com/objarni/AlarmClockKata"
           , tags = Set.fromList [ "C" ]
@@ -145,6 +145,7 @@ view model =
         , searchBar
         , tags
         , katasList
+        , text "hej"
         ]
 
 
@@ -168,6 +169,6 @@ viewMarkedTag tag =
 
 viewKata kata =
     div [ Attr.class "kata" ]
-        [ a [ Attr.href kata.url, Attr.class "kata-title" ] [ text kata.title ]
+        [ a [ Attr.href kata.url, Attr.target "_blank", Attr.class "kata-title" ] [ text kata.title ]
         , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
