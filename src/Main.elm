@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (Html, a, button, div, h1, input, span, text)
-import Html.Attributes exposing (class, href, placeholder, style, value)
+import Html.Attributes as Attr exposing (class, placeholder, size, style, value)
 import Html.Events exposing (onClick, onInput)
 import Set exposing (..)
 
@@ -15,6 +15,7 @@ type alias Model =
     { searchBarContent : String
     , katas : List Kata
     , activeTags : Set String
+    , loggedIn : Bool
     }
 
 
@@ -28,6 +29,7 @@ type alias Kata =
 init : Model
 init =
     { searchBarContent = ""
+    , loggedIn = False
     , katas =
         [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
           , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
@@ -50,7 +52,7 @@ init =
           , title = "Tennis Score"
           }
         ]
-    , activeTags = Set.empty |> Set.insert "C" |> Set.insert "Delphi"
+    , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
     }
 
 
@@ -58,6 +60,8 @@ type Msg
     = SearchBarChange String
     | ActivateTag String
     | DeactivateTag String
+    | LogIn
+    | LogOut
 
 
 update : Msg -> Model -> Model
@@ -65,10 +69,18 @@ update msg model =
     case msg of
         SearchBarChange s ->
             { model | searchBarContent = s }
+
         ActivateTag tag ->
-            { model | activeTags = Set.insert tag model.activeTags}
+            { model | activeTags = Set.insert tag model.activeTags }
+
         DeactivateTag tag ->
-            { model | activeTags = Set.remove tag model.activeTags}
+            { model | activeTags = Set.remove tag model.activeTags }
+
+        LogIn ->
+            { model | loggedIn = True }
+
+        LogOut ->
+            { model | loggedIn = False }
 
 
 view : Model -> Html Msg
@@ -77,9 +89,10 @@ view model =
         searchBar =
             div []
                 [ input
-                    [ placeholder "Search for kata"
+                    [ Attr.placeholder "general search (not working yet!)"
                     , value model.searchBarContent
                     , onInput SearchBarChange
+                    , Attr.size 60
                     ]
                     []
                 , button [] [ text "Search" ]
@@ -88,53 +101,73 @@ view model =
         allTags =
             let
                 accumulatedTags =
-                    List.concat (List.map (\kata -> (Set.toList kata.tags)) model.katas)
+                    List.concat (List.map (\kata -> Set.toList kata.tags) model.katas)
 
                 uniqueTags =
                     Set.fromList accumulatedTags
             in
-            Set.toList uniqueTags
+            Set.toList
+                uniqueTags
 
         tags =
             div []
-                [ text "Filter by tag:"
-                , div [] (List.map (\tag -> viewTag tag  model.activeTags) allTags) ]
+                [ text "Filter by tag"
+                , div [] (List.map (\tag -> viewTag tag model.activeTags) allTags)
+                ]
 
         shouldShow : Kata -> Bool
-        shouldShow kata = 
-            let kataTags = kata.tags
+        shouldShow kata =
+            let
+                kataTags =
+                    kata.tags
             in
             Set.isEmpty (Set.diff model.activeTags kataTags)
 
-        visibleKatas = List.filter shouldShow model.katas
+        visibleKatas =
+            List.filter shouldShow model.katas
 
         katasList =
             div [] (List.map viewKata visibleKatas)
+
+        userStatus =
+            let
+                ( txt, msg ) =
+                    if model.loggedIn then
+                        ( "Log out", LogOut )
+
+                    else
+                        ( "Log in", LogIn )
+            in
+            a [ onClick msg ] [ text txt ]
     in
     div []
-        [ searchBar
+        [ userStatus
+        , searchBar
         , tags
         , katasList
         ]
+
 
 viewTag : String -> Set String -> Html Msg
 viewTag tag activeTags =
     if Set.member tag activeTags then
         viewMarkedTag tag
+
     else
         viewUnmarkedTag tag
 
+
 viewUnmarkedTag : String -> Html Msg
 viewUnmarkedTag tag =
-    span [ class "tag", onClick (ActivateTag tag) ] [ text tag ]
+    span [ Attr.class "tag", onClick (ActivateTag tag) ] [ text tag ]
 
 
 viewMarkedTag tag =
-    span [ class "tag highlight", onClick (DeactivateTag tag) ] [ text tag ]
+    span [ Attr.class "tag highlight", onClick (DeactivateTag tag) ] [ text tag ]
 
 
 viewKata kata =
-    div [ class "kata" ]
-        [ a [ href kata.url, class "kata-title" ] [ text kata.title ]
+    div [ Attr.class "kata" ]
+        [ a [ Attr.href kata.url, Attr.class "kata-title" ] [ text kata.title ]
         , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
