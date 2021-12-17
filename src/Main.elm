@@ -10,13 +10,14 @@ import Set exposing (..)
 main =
     Browser.sandbox { init = init, update = update, view = view }
 
-
-type alias Model =
+type alias MainPageContent =
     { searchBarContent : String
     , katas : List Kata
     , activeTags : Set String
     , loggedIn : Bool
     }
+
+type Model = MainPage MainPageContent
 
 
 type alias Kata =
@@ -27,8 +28,7 @@ type alias Kata =
 
 
 init : Model
-init =
-    { searchBarContent = ""
+init = MainPage { searchBarContent = ""
     , loggedIn = False
     , katas =
         [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
@@ -65,26 +65,26 @@ type Msg
 
 
 update : Msg -> Model -> Model
-update msg model =
+update msg (MainPage model) =
     case msg of
         SearchBarChange s ->
-            { model | searchBarContent = s }
+            MainPage { model | searchBarContent = s }
 
         ActivateTag tag ->
-            { model | activeTags = Set.insert tag model.activeTags }
+            MainPage { model | activeTags = Set.insert tag model.activeTags }
 
         DeactivateTag tag ->
-            { model | activeTags = Set.remove tag model.activeTags }
+            MainPage { model | activeTags = Set.remove tag model.activeTags }
 
         LogIn ->
-            { model | loggedIn = True }
+            MainPage { model | loggedIn = True }
 
         LogOut ->
-            { model | loggedIn = False }
+            MainPage { model | loggedIn = False }
 
 
 view : Model -> Html Msg
-view model =
+view (MainPage model) =
     let
         searchBar =
             div []
@@ -127,7 +127,7 @@ view model =
             List.filter shouldShow model.katas
 
         katasList =
-            div [] (List.map viewKata visibleKatas)
+            div [] (List.map (viewKata model.loggedIn) visibleKatas)
 
         userStatus =
             let
@@ -167,9 +167,9 @@ viewMarkedTag tag =
     span [ Attr.class "tag highlight", onClick (DeactivateTag tag) ] [ text tag ]
 
 
-viewKata kata =
+viewKata loggedIn kata =
     div [ Attr.class "kata" ]
-        [ text "🖌️"
+        [ text (if loggedIn then "🖌️ " else "")
         , a [ Attr.href kata.url
             , Attr.target "_blank"
             , Attr.class "kata-title" ] [ text kata.title ]
