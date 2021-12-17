@@ -4,11 +4,13 @@ import Browser
 import Html exposing (Html, a, button, div, h1, input, span, text)
 import Html.Attributes as Attr exposing (class, placeholder, size, style, target, value)
 import Html.Events exposing (onClick, onInput)
+import Json.Encode as Encode
 import Set exposing (..)
 
 
 main =
     Browser.sandbox { init = init, update = update, view = view }
+
 
 type alias MainPageContent =
     { searchBarContent : String
@@ -17,7 +19,9 @@ type alias MainPageContent =
     , loggedIn : Bool
     }
 
-type Model = MainPage MainPageContent
+
+type Model
+    = MainPage MainPageContent
 
 
 type alias Kata =
@@ -28,32 +32,34 @@ type alias Kata =
 
 
 init : Model
-init = MainPage { searchBarContent = ""
-    , loggedIn = False
-    , katas =
-        [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
-          , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
-          , title = "Gilded Rose"
-          }
-        , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
-          , tags = Set.fromList [ "Java", "Approvals" ]
-          , title = "RPG Combat"
-          }
-        , { url = "https://github.com/objarni/TestDataBuilderKata"
-          , tags = Set.fromList [ "C" ]
-          , title = "Channel - Test Data Builder in C"
-          }
-        , { url = "https://github.com/objarni/AlarmClockKata"
-          , tags = Set.fromList [ "C" ]
-          , title = "Alarm Clock (aka Timer Expiry)"
-          }
-        , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
-          , tags = Set.fromList [ "C++", "C", "Go", "Java", "Groovy", "C#" ]
-          , title = "Tennis Score"
-          }
-        ]
-    , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
-    }
+init =
+    MainPage
+        { searchBarContent = ""
+        , loggedIn = False
+        , katas =
+            [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
+              , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
+              , title = "Gilded Rose"
+              }
+            , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
+              , tags = Set.fromList [ "Java", "Approvals" ]
+              , title = "RPG Combat"
+              }
+            , { url = "https://github.com/objarni/TestDataBuilderKata"
+              , tags = Set.fromList [ "C" ]
+              , title = "Channel - Test Data Builder in C"
+              }
+            , { url = "https://github.com/objarni/AlarmClockKata"
+              , tags = Set.fromList [ "C" ]
+              , title = "Alarm Clock (aka Timer Expiry)"
+              }
+            , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
+              , tags = Set.fromList [ "C++", "C", "Go", "Java", "Groovy", "C#" ]
+              , title = "Tennis Score"
+              }
+            ]
+        , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
+        }
 
 
 type Msg
@@ -145,7 +151,7 @@ view (MainPage model) =
         , searchBar
         , tags
         , katasList
-        , text "(JSON representation will be here later)"
+        , div [ class "monospace" ] [ text json ]
         ]
 
 
@@ -169,9 +175,34 @@ viewMarkedTag tag =
 
 viewKata loggedIn kata =
     div [ Attr.class "kata" ]
-        [ text (if loggedIn then "🖌️ " else "")
-        , a [ Attr.href kata.url
+        [ text
+            (if loggedIn then
+                "🖌️ "
+
+             else
+                ""
+            )
+        , a
+            [ Attr.href kata.url
             , Attr.target "_blank"
-            , Attr.class "kata-title" ] [ text kata.title ]
+            , Attr.class "kata-title"
+            ]
+            [ text kata.title ]
         , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
+
+
+
+-- JSON
+
+
+tom : Encode.Value
+tom =
+    Encode.object
+        [ ( "name", Encode.string "Tom" )
+        , ( "age", Encode.int 42 )
+        ]
+
+
+json =
+    Encode.encode 4 tom

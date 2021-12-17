@@ -10,7 +10,9 @@ a {
 a:hover {
   background-color: lightgreen;
 }
-.tag {
+div {
+  margin:  5px;
+}.tag {
   color: green;
   border-color: dimgray;
   border-width: thin;
@@ -28,6 +30,6 @@ a:hover {
 .kata-title {
   font-size: large;
 }
-div {
-  margin:  5px;
+.monospace {
+  font-family: monospace;
 }
