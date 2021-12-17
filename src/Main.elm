@@ -145,7 +145,7 @@ view model =
         , searchBar
         , tags
         , katasList
-        , text "hej"
+        , text "(JSON representation will be here later)"
         ]
 
 
@@ -169,6 +169,9 @@ viewMarkedTag tag =
 
 viewKata kata =
     div [ Attr.class "kata" ]
-        [ a [ Attr.href kata.url, Attr.target "_blank", Attr.class "kata-title" ] [ text kata.title ]
+        [ text "🖌️"
+        , a [ Attr.href kata.url
+            , Attr.target "_blank"
+            , Attr.class "kata-title" ] [ text kata.title ]
         , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
