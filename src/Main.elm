@@ -145,13 +145,21 @@ view (MainPage model) =
                         ( "Log in", LogIn )
             in
             a [ onClick msg ] [ text txt ]
+
+        jsonString =
+            case List.head model.katas of
+                Nothing ->
+                    "{}"
+
+                Just kata ->
+                    Encode.encode 4 (kataJSON kata)
     in
     div []
         [ userStatus
         , searchBar
         , tags
         , katasList
-        , div [ class "monospace" ] [ text json ]
+        , div [ class "monospace" ] [ text jsonString ]
         ]
 
 
@@ -194,6 +202,14 @@ viewKata loggedIn kata =
 
 
 -- JSON
+
+
+kataJSON : Kata -> Encode.Value
+kataJSON kata =
+    Encode.object
+        [ ( "url", Encode.string kata.url )
+        , ( "title", Encode.string kata.title )
+        ]
 
 
 tom : Encode.Value
