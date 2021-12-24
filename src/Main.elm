@@ -25,7 +25,8 @@ type alias SearchPageData =
 
 
 type alias AppState =
-    {}
+    { loggedIn : Bool
+    }
 
 
 type Model
@@ -68,7 +69,7 @@ init =
             ]
         , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
         }
-        {}
+        { loggedIn = False }
 
 
 type Msg
@@ -83,19 +84,19 @@ update : Msg -> Model -> Model
 update msg (KataApp model appState) =
     case msg of
         SearchBarChange s ->
-            KataApp { model | searchBarContent = s } {}
+            KataApp { model | searchBarContent = s } appState
 
         ActivateTag tag ->
-            KataApp { model | activeTags = Set.insert tag model.activeTags } {}
+            KataApp { model | activeTags = Set.insert tag model.activeTags } appState
 
         DeactivateTag tag ->
-            KataApp { model | activeTags = Set.remove tag model.activeTags } {}
+            KataApp { model | activeTags = Set.remove tag model.activeTags } appState
 
         LogIn ->
-            KataApp { model | loggedIn = True } {}
+            KataApp model { loggedIn = True }
 
         LogOut ->
-            KataApp { model | loggedIn = False } {}
+            KataApp model { loggedIn = False }
 
 
 view : Model -> Html Msg
