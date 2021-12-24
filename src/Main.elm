@@ -79,32 +79,32 @@ type Msg
 
 
 update : Msg -> Model -> Model
-update msg (KataApp model appState) =
+update msg (KataApp pageData appState) =
     case msg of
         SearchBarChange s ->
-            KataApp { model | searchBarContent = s } appState
+            KataApp { pageData | searchBarContent = s } appState
 
         ActivateTag tag ->
-            KataApp { model | activeTags = Set.insert tag model.activeTags } appState
+            KataApp { pageData | activeTags = Set.insert tag pageData.activeTags } appState
 
         DeactivateTag tag ->
-            KataApp { model | activeTags = Set.remove tag model.activeTags } appState
+            KataApp { pageData | activeTags = Set.remove tag pageData.activeTags } appState
 
         LogIn ->
-            KataApp model { loggedIn = True }
+            KataApp pageData { loggedIn = True }
 
         LogOut ->
-            KataApp model { loggedIn = False }
+            KataApp pageData { loggedIn = False }
 
 
 view : Model -> Html Msg
-view (KataApp model appState) =
+view (KataApp pageData appState) =
     let
         searchBar =
             div []
                 [ input
                     [ Attr.placeholder "general search (not working yet!)"
-                    , value model.searchBarContent
+                    , value pageData.searchBarContent
                     , onInput SearchBarChange
                     , Attr.size 60
                     ]
@@ -115,7 +115,7 @@ view (KataApp model appState) =
         allTags =
             let
                 accumulatedTags =
-                    List.concat (List.map (\kata -> Set.toList kata.tags) model.katas)
+                    List.concat (List.map (\kata -> Set.toList kata.tags) pageData.katas)
 
                 uniqueTags =
                     Set.fromList accumulatedTags
@@ -126,7 +126,7 @@ view (KataApp model appState) =
         tags =
             div []
                 [ text "Filter by tag"
-                , div [] (List.map (\tag -> viewTag tag model.activeTags) allTags)
+                , div [] (List.map (\tag -> viewTag tag pageData.activeTags) allTags)
                 ]
 
         shouldShow : Kata -> Bool
@@ -135,10 +135,10 @@ view (KataApp model appState) =
                 kataTags =
                     kata.tags
             in
-            Set.isEmpty (Set.diff model.activeTags kataTags)
+            Set.isEmpty (Set.diff pageData.activeTags kataTags)
 
         visibleKatas =
-            List.filter shouldShow model.katas
+            List.filter shouldShow pageData.katas
 
         katasList =
             div [] (List.map (viewKata appState.loggedIn) visibleKatas)
@@ -155,12 +155,12 @@ view (KataApp model appState) =
             a [ onClick msg ] [ text txt ]
 
         jsonString =
-            case List.head model.katas of
+            case List.head pageData.katas of
                 Nothing ->
                     "{}"
 
                 Just kata ->
-                    Encode.encode 4 (katasJSON model.katas)
+                    Encode.encode 4 (katasJSON pageData.katas)
     in
     div []
         [ userStatus
