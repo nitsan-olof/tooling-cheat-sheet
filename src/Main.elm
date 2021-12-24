@@ -18,13 +18,13 @@ main =
 
 type alias SearchPageData =
     { searchBarContent : String
-    , katas : List Kata
     , activeTags : Set String
     }
 
 
 type alias AppState =
     { loggedIn : Bool
+    , katas : List Kata
     }
 
 
@@ -43,6 +43,9 @@ init : Model
 init =
     KataApp
         { searchBarContent = ""
+        , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
+        }
+        { loggedIn = False
         , katas =
             [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
               , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
@@ -65,9 +68,7 @@ init =
               , title = "Tennis Score"
               }
             ]
-        , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
         }
-        { loggedIn = False }
 
 
 type Msg
@@ -91,10 +92,10 @@ update msg (KataApp pageData appState) =
             KataApp { pageData | activeTags = Set.remove tag pageData.activeTags } appState
 
         LogIn ->
-            KataApp pageData { loggedIn = True }
+            KataApp pageData { appState | loggedIn = True }
 
         LogOut ->
-            KataApp pageData { loggedIn = False }
+            KataApp pageData { appState | loggedIn = False }
 
 
 view : Model -> Html Msg
@@ -115,7 +116,7 @@ view (KataApp pageData appState) =
         allTags =
             let
                 accumulatedTags =
-                    List.concat (List.map (\kata -> Set.toList kata.tags) pageData.katas)
+                    List.concat (List.map (\kata -> Set.toList kata.tags) appState.katas)
 
                 uniqueTags =
                     Set.fromList accumulatedTags
@@ -138,7 +139,7 @@ view (KataApp pageData appState) =
             Set.isEmpty (Set.diff pageData.activeTags kataTags)
 
         visibleKatas =
-            List.filter shouldShow pageData.katas
+            List.filter shouldShow appState.katas
 
         katasList =
             div [] (List.map (viewKata appState.loggedIn) visibleKatas)
@@ -155,12 +156,12 @@ view (KataApp pageData appState) =
             a [ onClick msg ] [ text txt ]
 
         jsonString =
-            case List.head pageData.katas of
+            case List.head appState.katas of
                 Nothing ->
                     "{}"
 
                 Just kata ->
-                    Encode.encode 4 (katasJSON pageData.katas)
+                    Encode.encode 4 (katasJSON appState.katas)
     in
     div []
         [ userStatus
