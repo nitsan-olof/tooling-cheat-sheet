@@ -16,7 +16,7 @@ main =
         }
 
 
-type alias MainPageContent =
+type alias SearchPageData =
     { searchBarContent : String
     , katas : List Kata
     , activeTags : Set String
@@ -24,8 +24,12 @@ type alias MainPageContent =
     }
 
 
+type alias AppState =
+    {}
+
+
 type Model
-    = MainPage MainPageContent
+    = KataApp SearchPageData AppState
 
 
 type alias Kata =
@@ -37,7 +41,7 @@ type alias Kata =
 
 init : Model
 init =
-    MainPage
+    KataApp
         { searchBarContent = ""
         , loggedIn = False
         , katas =
@@ -64,6 +68,7 @@ init =
             ]
         , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
         }
+        {}
 
 
 type Msg
@@ -75,26 +80,26 @@ type Msg
 
 
 update : Msg -> Model -> Model
-update msg (MainPage model) =
+update msg (KataApp model appState) =
     case msg of
         SearchBarChange s ->
-            MainPage { model | searchBarContent = s }
+            KataApp { model | searchBarContent = s } {}
 
         ActivateTag tag ->
-            MainPage { model | activeTags = Set.insert tag model.activeTags }
+            KataApp { model | activeTags = Set.insert tag model.activeTags } {}
 
         DeactivateTag tag ->
-            MainPage { model | activeTags = Set.remove tag model.activeTags }
+            KataApp { model | activeTags = Set.remove tag model.activeTags } {}
 
         LogIn ->
-            MainPage { model | loggedIn = True }
+            KataApp { model | loggedIn = True } {}
 
         LogOut ->
-            MainPage { model | loggedIn = False }
+            KataApp { model | loggedIn = False } {}
 
 
 view : Model -> Html Msg
-view (MainPage model) =
+view (KataApp model appState) =
     let
         searchBar =
             div []
