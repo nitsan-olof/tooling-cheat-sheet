@@ -20,7 +20,6 @@ type alias SearchPageData =
     { searchBarContent : String
     , katas : List Kata
     , activeTags : Set String
-    , loggedIn : Bool
     }
 
 
@@ -44,7 +43,6 @@ init : Model
 init =
     KataApp
         { searchBarContent = ""
-        , loggedIn = False
         , katas =
             [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
               , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
@@ -143,12 +141,12 @@ view (KataApp model appState) =
             List.filter shouldShow model.katas
 
         katasList =
-            div [] (List.map (viewKata model.loggedIn) visibleKatas)
+            div [] (List.map (viewKata appState.loggedIn) visibleKatas)
 
         userStatus =
             let
                 ( txt, msg ) =
-                    if model.loggedIn then
+                    if appState.loggedIn then
                         ( "Log out", LogOut )
 
                     else
