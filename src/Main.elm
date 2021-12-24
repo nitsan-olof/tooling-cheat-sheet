@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import Html exposing (Html, a, button, div, h1, input, span, text)
+import Html exposing (Html, a, button, div, h1, input, pre, span, text)
 import Html.Attributes as Attr exposing (class, placeholder, size, style, target, value)
 import Html.Events exposing (onClick, onInput)
 import Json.Encode as Encode
@@ -9,7 +9,11 @@ import Set exposing (..)
 
 
 main =
-    Browser.sandbox { init = init, update = update, view = view }
+    Browser.sandbox
+        { init = init
+        , update = update
+        , view = view
+        }
 
 
 type alias MainPageContent =
@@ -152,14 +156,14 @@ view (MainPage model) =
                     "{}"
 
                 Just kata ->
-                    Encode.encode 4 (kataJSON kata)
+                    Encode.encode 4 (katasJSON model.katas)
     in
     div []
         [ userStatus
         , searchBar
         , tags
         , katasList
-        , div [ class "monospace" ] [ text jsonString ]
+        , pre [ class "monospace" ] [ text jsonString ]
         ]
 
 
@@ -204,21 +208,15 @@ viewKata loggedIn kata =
 -- JSON
 
 
+katasJSON : List Kata -> Encode.Value
+katasJSON katas =
+    Encode.list kataJSON katas
+
+
 kataJSON : Kata -> Encode.Value
 kataJSON kata =
     Encode.object
         [ ( "url", Encode.string kata.url )
         , ( "title", Encode.string kata.title )
+        , ( "tags", Encode.set (\tag -> Encode.string tag) kata.tags )
         ]
-
-
-tom : Encode.Value
-tom =
-    Encode.object
-        [ ( "name", Encode.string "Tom" )
-        , ( "age", Encode.int 42 )
-        ]
-
-
-json =
-    Encode.encode 4 tom
