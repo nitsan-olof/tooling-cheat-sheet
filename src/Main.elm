@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+
 import Browser
 import Html exposing (Html, a, button, div, h1, input, pre, span, text)
 import Html.Attributes as Attr exposing (class, placeholder, size, style, target, value)
@@ -47,8 +48,8 @@ init =
         }
         { loggedIn = False
         , katas =
-            [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
-              , tags = Set.fromList [ "C", "R", "Smalltalk", "Java", "Delphi" ]
+            [ { url =   "https://github.com/emilybache/GildedRose-Refactoring-Kata"
+              , tags = Set.fromList [ "MultiLang", "Approvals" ]
               , title = "Gilded Rose"
               }
             , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
@@ -56,7 +57,7 @@ init =
               , title = "RPG Combat"
               }
             , { url = "https://github.com/objarni/TestDataBuilderKata"
-              , tags = Set.fromList [ "C" ]
+              , tags = Set.fromList [ "C", "W.I.P" ]
               , title = "Channel - Test Data Builder in C"
               }
             , { url = "https://github.com/objarni/AlarmClockKata"
@@ -64,7 +65,15 @@ init =
               , title = "Alarm Clock (aka Timer Expiry)"
               }
             , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
-              , tags = Set.fromList [ "C++", "C", "Go", "Java", "Groovy", "C#" ]
+              , tags =
+                    Set.fromList
+                        [ "C"
+                        , "C++"
+                        , "C#"
+                        , "Golang"
+                        , "Java"
+                        , "Groovy"
+                        ]
               , title = "Tennis Score"
               }
             ]
