@@ -127,7 +127,7 @@ view (KataApp pageData appState) =
         tags =
             div []
                 [ text "Filter by tag"
-                , div [] (List.map (\tag -> viewTag tag pageData.activeTags) allTags)
+                , span [] (List.map (\tag -> viewTag tag pageData.activeTags) allTags)
                 ]
 
         shouldShow : Kata -> Bool
@@ -164,11 +164,12 @@ view (KataApp pageData appState) =
                     Encode.encode 4 (katasJSON appState.katas)
     in
     div []
-        [ userStatus
-        , searchBar
-        , tags
+        [ --userStatus
+          --, searchBar
+          tags
         , katasList
-        , pre [ class "monospace" ] [ text jsonString ]
+
+        --, pre [ class "monospace" ] [ text jsonString ]
         ]
 
 
