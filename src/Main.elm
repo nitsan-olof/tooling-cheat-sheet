@@ -2,11 +2,12 @@ module Main exposing (..)
 
 
 import Browser
-import Html exposing (Html, a, button, div, h1, input, pre, span, text)
-import Html.Attributes as Attr exposing (class, placeholder, size, style, target, value)
+import Html exposing (Html, a, button, div, input, span, text)
+import Html.Attributes as Attr exposing (value)
 import Html.Events exposing (onClick, onInput)
 import Json.Encode as Encode
 import Set exposing (..)
+import KataDb exposing (kataList)
 
 
 main =
@@ -25,7 +26,7 @@ type alias SearchPageData =
 
 type alias AppState =
     { loggedIn : Bool
-    , katas : List Kata
+    , kataList : List Kata
     }
 
 
@@ -47,36 +48,8 @@ init =
         , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
         }
         { loggedIn = False
-        , katas =
-            [ { url =   "https://github.com/emilybache/GildedRose-Refactoring-Kata"
-              , tags = Set.fromList [ "MultiLang", "Approvals" ]
-              , title = "Gilded Rose"
-              }
-            , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
-              , tags = Set.fromList [ "Java", "Approvals" ]
-              , title = "RPG Combat"
-              }
-            , { url = "https://github.com/objarni/TestDataBuilderKata"
-              , tags = Set.fromList [ "C", "W.I.P" ]
-              , title = "Channel - Test Data Builder in C"
-              }
-            , { url = "https://github.com/objarni/AlarmClockKata"
-              , tags = Set.fromList [ "C" ]
-              , title = "Alarm Clock (aka Timer Expiry)"
-              }
-            , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
-              , tags =
-                    Set.fromList
-                        [ "C"
-                        , "C++"
-                        , "C#"
-                        , "Golang"
-                        , "Java"
-                        , "Groovy"
-                        ]
-              , title = "Tennis Score"
-              }
-            ]
+        , kataList =
+            kataList
         }
 
 
@@ -125,7 +98,7 @@ view (KataApp pageData appState) =
         allTags =
             let
                 accumulatedTags =
-                    List.concat (List.map (\kata -> Set.toList kata.tags) appState.katas)
+                    List.concat (List.map (\kata -> Set.toList kata.tags) appState.kataList)
 
                 uniqueTags =
                     Set.fromList accumulatedTags
@@ -148,7 +121,7 @@ view (KataApp pageData appState) =
             Set.isEmpty (Set.diff pageData.activeTags kataTags)
 
         visibleKatas =
-            List.filter shouldShow appState.katas
+            List.filter shouldShow appState.kataList
 
         katasList =
             div [] (List.map (viewKata appState.loggedIn) visibleKatas)
@@ -165,12 +138,12 @@ view (KataApp pageData appState) =
             a [ onClick msg ] [ text txt ]
 
         jsonString =
-            case List.head appState.katas of
+            case List.head appState.kataList of
                 Nothing ->
                     "{}"
 
                 Just kata ->
-                    Encode.encode 4 (katasJSON appState.katas)
+                    Encode.encode 4 (katasJSON appState.kataList)
     in
     div []
         [ --userStatus
