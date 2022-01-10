@@ -4,7 +4,7 @@ import Set
 
 kataList =
             [ { url =   "https://github.com/emilybache/GildedRose-Refactoring-Kata"
-              , tags = Set.fromList [ "MultiLang", "Approvals" ]
+              , tags = Set.fromList [ "MultiLang", "Approvals", "Refactoring" ]
               , title = "Gilded Rose"
               }
             , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
@@ -16,7 +16,7 @@ kataList =
               , title = "Channel - Test Data Builder in C"
               }
             , { url = "https://github.com/objarni/AlarmClockKata"
-              , tags = Set.fromList [ "C" ]
+              , tags = Set.fromList [ "C", "Refactoring" ]
               , title = "Alarm Clock (aka Timer Expiry)"
               }
             , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
@@ -28,6 +28,7 @@ kataList =
                         , "Golang"
                         , "Java"
                         , "Groovy"
+                        , "Refactoring"
                         ]
               , title = "Tennis Score"
               }
