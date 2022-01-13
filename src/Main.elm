@@ -121,7 +121,7 @@ view (KataApp pageData appState) =
             Set.isEmpty (Set.diff pageData.activeTags kataTags)
 
         visibleKatas =
-            List.filter shouldShow appState.kataList
+            List.sortBy .title (List.filter shouldShow appState.kataList)
 
         katasList =
             div [] (List.map (viewKata appState.loggedIn) visibleKatas)
