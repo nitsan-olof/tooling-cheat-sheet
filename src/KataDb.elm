@@ -50,4 +50,14 @@ kataList =
                 ]
       , title = "Empty starting point"
       }
+    , { url = "https://github.com/objarni/VendingMachine-Approval-Kata"
+      , tags =
+            Set.fromList
+                [ "C"
+                , "C++"
+                , "Python"
+                , "Approvals"
+                ]
+      , title = "Vending machine receipt printer"
+      }
     ]
