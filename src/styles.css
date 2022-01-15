@@ -12,7 +12,12 @@ a:hover {
 }
 div {
   margin:  5px;
-}.tag {
+}
+span {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tag {
   color: green;
   border-color: dimgray;
   border-width: thin;
