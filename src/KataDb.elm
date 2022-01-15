@@ -32,5 +32,23 @@ kataList =
                         ]
               , title = "Tennis Score"
               }
+            , { url = "https://github.com/objarni/MostRecentlyUsedKata"
+              , tags =
+                    Set.fromList
+                        [ "DoubleLoopTDD"
+                        , "TDD"
+                        , "MultiLang"
+                        ]
+              , title = "Most recently used"
+              }
+            , { url = "https://github.com/objarni/starter"
+              , tags =
+                    Set.fromList
+                        [ "MultiLang"
+                        , "TDD"
+                        ]
+              , title = "Empty starting point"
+              }
             ]
 
+--
