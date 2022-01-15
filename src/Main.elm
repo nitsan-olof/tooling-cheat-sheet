@@ -1,13 +1,12 @@
 module Main exposing (..)
 
-
 import Browser
 import Html exposing (Html, a, button, div, input, span, text)
 import Html.Attributes as Attr exposing (value)
 import Html.Events exposing (onClick, onInput)
 import Json.Encode as Encode
-import Set exposing (..)
 import KataDb exposing (kataList)
+import Set exposing (..)
 
 
 main =
