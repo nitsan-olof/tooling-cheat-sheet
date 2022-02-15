@@ -20,7 +20,7 @@ kataList =
       , tags = Set.fromList [ "C", "Refactoring" ]
       , title = "Alarm Clock (aka Timer Expiry)"
       }
-    , { url = "https://github.com/objarni/Tennis-Refactoring-Kata"
+    , { url = "https://github.com/ProAgileAB/Tennis-Refactoring-Kata"
       , tags =
             Set.fromList
                 [ "C"
