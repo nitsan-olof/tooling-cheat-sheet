@@ -12,9 +12,9 @@ kataList =
       , tags = Set.fromList [ "Java", "Approvals" ]
       , title = "RPG Combat"
       }
-    , { url = "https://github.com/objarni/TestDataBuilderKata"
+    , { url = "https://github.com/ProAgileAB/channels-tests-refactoring-kata"
       , tags = Set.fromList [ "C", "W.I.P" ]
-      , title = "Channel - Test Data Builder in C"
+      , title = "Channels - refactor to Test Data Builder pattern"
       }
     , { url = "https://github.com/objarni/AlarmClockKata"
       , tags = Set.fromList [ "C", "Refactoring" ]
