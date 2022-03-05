@@ -21,7 +21,10 @@ kataList =
       , title = "Alarm Clock (aka Timer Expiry)"
       }
     , { url = "https://sammancoaching.org/kata_descriptions/calc_stats.html"
-      , tags = Set.fromList [ "MultiLang", "TDD" ]
+      , tags = Set.fromList [ "MultiLang"
+                            , "TDD"
+                            , "ProblemDescriptionOnly"
+                            ]
       , title = "CalcStats"
       }
     , { url = "https://github.com/ProAgileAB/tennis-refactoring-kata"
@@ -43,14 +46,25 @@ kataList =
                 [ "ATDD"
                 , "TDD"
                 , "MultiLang"
+                , "ProblemDescriptionOnly"
                 ]
       , title = "Most recently used"
+      }
+    , { url = "https://sammancoaching.org/kata_descriptions/string_calculator.html"
+      , tags =
+            Set.fromList
+                [ "TDD"
+                , "MultiLang"
+                , "ProblemDescriptionOnly"
+                ]
+      , title = "String Calculator"
       }
     , { url = "https://github.com/objarni/starter"
       , tags =
             Set.fromList
                 [ "MultiLang"
                 , "TDD"
+                , "ProblemDescriptionOnly"
                 ]
       , title = "Empty starting point"
       }
