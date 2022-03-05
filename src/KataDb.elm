@@ -5,20 +5,24 @@ import Set
 
 kataList =
     [ { url = "https://github.com/emilybache/GildedRose-Refactoring-Kata"
-      , tags = Set.fromList [ "MultiLang", "Approvals", "Refactoring" ]
+      , tags = Set.fromList [ "MultiLang", "Approvals", "Refactoring", "TestDesign" ]
       , title = "Gilded Rose"
       }
     , { url = "https://github.com/emilybache/RPG-Combat-Approval-Kata"
-      , tags = Set.fromList [ "Java", "Approvals" ]
+      , tags = Set.fromList [ "Java", "Approvals", "TestDesign" ]
       , title = "RPG Combat"
       }
     , { url = "https://github.com/ProAgileAB/channels-tests-refactoring-kata"
-      , tags = Set.fromList [ "C", "W.I.P" ]
-      , title = "Channels - refactor to Test Data Builder pattern"
+      , tags = Set.fromList [ "C", "Refactoring", "TestDesign" ]
+      , title = "Channels - Test Data Builder pattern"
       }
     , { url = "https://github.com/objarni/AlarmClockKata"
       , tags = Set.fromList [ "C", "Refactoring" ]
       , title = "Alarm Clock (aka Timer Expiry)"
+      }
+    , { url = "https://sammancoaching.org/kata_descriptions/calc_stats.html"
+      , tags = Set.fromList [ "MultiLang", "TDD" ]
+      , title = "CalcStats"
       }
     , { url = "https://github.com/ProAgileAB/tennis-refactoring-kata"
       , tags =
@@ -36,7 +40,7 @@ kataList =
     , { url = "https://github.com/objarni/MostRecentlyUsedKata"
       , tags =
             Set.fromList
-                [ "DoubleLoopTDD"
+                [ "ATDD"
                 , "TDD"
                 , "MultiLang"
                 ]
@@ -57,6 +61,7 @@ kataList =
                 , "C++"
                 , "Python"
                 , "Approvals"
+                , "TestDesign"
                 ]
       , title = "Vending machine receipt printer"
       }
