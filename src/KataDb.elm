@@ -64,7 +64,6 @@ kataList =
             Set.fromList
                 [ "MultiLang"
                 , "TDD"
-                , "ProblemDescriptionOnly"
                 ]
       , title = "Empty starting point"
       }
