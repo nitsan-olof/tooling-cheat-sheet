@@ -67,7 +67,7 @@ kataList =
                 ]
       , title = "Empty starting point"
       }
-    , { url = "https://github.com/objarni/VendingMachine-Approval-Kata"
+    , { url = "https://github.com/ProAgileAB/vending-machine-kata"
       , tags =
             Set.fromList
                 [ "C"
