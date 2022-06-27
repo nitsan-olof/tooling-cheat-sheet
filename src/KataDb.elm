@@ -78,4 +78,14 @@ kataList =
                 ]
       , title = "Vending machine receipt printer"
       }
-    ]
+    , { url = "https://github.com/willemlarsen/7stagesofnaming"
+      , tags =
+            Set.fromList
+                [ "Naming"
+                , "MultiLang"
+                , "ProblemDescriptionOnly"
+                ]
+      , title = "Vending machine receipt printer"
+      }
+]
+-- https://github.com/willemlarsen/7stagesofnaming
