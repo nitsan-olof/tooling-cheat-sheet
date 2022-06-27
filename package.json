@@ -10,6 +10,12 @@
     "format": "elm-format --yes src/*.elm",
     "elm": "elm"
   },
+  "resolutions": {
+    "source-map": "^0.8.0-beta.0"
+  },
+  "dependencies": {
+    "source-map": "^0.8.0-beta.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
