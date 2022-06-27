@@ -87,5 +87,4 @@ kataList =
                 ]
       , title = "7 stages of naming"
       }
-]
--- https://github.com/willemlarsen/7stagesofnaming
+    ]
