@@ -85,7 +85,7 @@ kataList =
                 , "MultiLang"
                 , "ProblemDescriptionOnly"
                 ]
-      , title = "Vending machine receipt printer"
+      , title = "7 stages of naming"
       }
 ]
 -- https://github.com/willemlarsen/7stagesofnaming
