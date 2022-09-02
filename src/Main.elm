@@ -37,6 +37,7 @@ type alias Kata =
     { url : String
     , tags : Set String
     , title : String
+    , commandLine : String
     }
 
 
@@ -186,7 +187,7 @@ viewKata loggedIn kata =
             , Attr.target "_blank"
             , Attr.class "kata-title"
             ]
-            [ text kata.title ]
+            [ text (kata.title ++ " "), text (" " ++ kata.commandLine) ]
         , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
 
