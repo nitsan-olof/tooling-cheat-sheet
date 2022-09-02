@@ -74,7 +74,7 @@ update msg (KataApp pageData appState) =
             KataApp { pageData | searchBarContent = s } appState
 
         ActivateTag tag ->
-            KataApp { pageData | activeTags = Set.insert tag pageData.activeTags } appState
+            KataApp { pageData | activeTags = Set.insert tag pageData.activeTags, selectedLanguage = Just tag } appState
 
         DeactivateTag tag ->
             KataApp { pageData | activeTags = Set.remove tag pageData.activeTags } appState
@@ -120,11 +120,16 @@ view (KataApp pageData appState) =
 
         shouldShow : Kata -> Bool
         shouldShow kata =
-            let
-                kataTags =
-                    kata.tags
-            in
-            Set.isEmpty (Set.diff pageData.activeTags kataTags)
+            case pageData.selectedLanguage of
+                Nothing ->
+                    False
+
+                Just language ->
+                    let
+                        kataTags =
+                            kata.tags
+                    in
+                    Set.member language kataTags
 
         visibleKatas =
             List.sortBy .title (List.filter shouldShow appState.kataList)
