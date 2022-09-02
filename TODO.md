@@ -1,0 +1,7 @@
+- tooling cheat sheet
+  - story: list languages select language
+    - abuse kata-db: switch to cheat sheet data
+  - someday maybe
+    - get back to main page
+    - routing (e.g. http://tcs/pthon)
+    - links to docs
