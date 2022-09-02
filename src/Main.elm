@@ -17,9 +17,14 @@ main =
         }
 
 
+type alias Language =
+    String
+
+
 type alias SearchPageData =
     { searchBarContent : String
     , activeTags : Set String
+    , selectedLanguage : Maybe Language
     }
 
 
@@ -46,6 +51,7 @@ init =
     KataApp
         { searchBarContent = ""
         , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
+        , selectedLanguage = Nothing
         }
         { loggedIn = False
         , kataList =
