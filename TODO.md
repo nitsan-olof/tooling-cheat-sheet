@@ -1,5 +1,5 @@
 # TODO
-1. clean-up the model - remove "tags", only keep "selected language"
+1. ~~clean-up the model - remove "tags", only keep "selected language"~~
 2. impl "deactivate"
 3. only show one language at a time
 

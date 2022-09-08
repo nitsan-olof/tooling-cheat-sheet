@@ -22,8 +22,7 @@ type alias Language =
 
 
 type alias SearchPageData =
-    { activeTags : Set String
-    , selectedLanguage : Maybe Language
+    { selectedLanguage : Maybe Language
     }
 
 
@@ -48,8 +47,7 @@ type alias Kata =
 init : Model
 init =
     KataApp
-        { activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
-        , selectedLanguage = Nothing
+        { selectedLanguage = Nothing
         }
         { loggedIn = False
         , kataList =
@@ -72,10 +70,10 @@ update msg (KataApp pageData appState) =
             KataApp pageData appState
 
         ActivateTag tag ->
-            KataApp { pageData | activeTags = Set.insert tag pageData.activeTags, selectedLanguage = Just tag } appState
+            KataApp { pageData | selectedLanguage = Just tag } appState
 
         DeactivateTag tag ->
-            KataApp { pageData | activeTags = Set.remove tag pageData.activeTags } appState
+            KataApp pageData appState
 
         LogIn ->
             KataApp pageData { appState | loggedIn = True }
