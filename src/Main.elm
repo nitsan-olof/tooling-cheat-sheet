@@ -56,8 +56,7 @@ init =
 
 
 type Msg
-    = SearchBarChange String
-    | ActivateTag String
+    = ActivateTag String
     | DeactivateTag String
     | LogIn
     | LogOut
@@ -66,9 +65,6 @@ type Msg
 update : Msg -> Model -> Model
 update msg (KataApp pageData appState) =
     case msg of
-        SearchBarChange s ->
-            KataApp pageData appState
-
         ActivateTag tag ->
             KataApp { pageData | selectedLanguage = Just tag } appState
 
@@ -141,12 +137,8 @@ view (KataApp pageData appState) =
                     Encode.encode 4 (katasJSON appState.kataList)
     in
     div []
-        [ --userStatus
-          --, searchBar
-          tags
+        [ tags
         , katasList
-
-        --, pre [ class "monospace" ] [ text jsonString ]
         ]
 
 
