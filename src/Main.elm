@@ -100,8 +100,8 @@ view (KataApp pageData appState) =
 
         tags =
             div []
-                [ text "Filter by language"
-                , span [] (List.map (\tag -> viewTag tag pageData.activeTags) allTags)
+                [ text "Select language"
+                , span [] (List.map (\tag -> viewTag tag pageData.selectedLanguage) allTags)
                 ]
 
         shouldShow : Kata -> Bool
@@ -152,13 +152,18 @@ view (KataApp pageData appState) =
         ]
 
 
-viewTag : String -> Set String -> Html Msg
-viewTag tag activeTags =
-    if Set.member tag activeTags then
-        viewMarkedTag tag
+viewTag : String -> Maybe String -> Html Msg
+viewTag tag selectedLanguage =
+    case selectedLanguage of
+        Nothing ->
+            viewUnmarkedTag tag
 
-    else
-        viewUnmarkedTag tag
+        Just language ->
+            if tag == language then
+                viewMarkedTag tag
+
+            else
+                viewUnmarkedTag tag
 
 
 viewUnmarkedTag : String -> Html Msg
