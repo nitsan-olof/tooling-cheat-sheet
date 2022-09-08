@@ -73,7 +73,7 @@ update msg (KataApp pageData appState) =
             KataApp { pageData | selectedLanguage = Just tag } appState
 
         DeactivateTag tag ->
-            KataApp pageData appState
+            KataApp { pageData | selectedLanguage = Nothing } appState
 
         LogIn ->
             KataApp pageData { appState | loggedIn = True }
