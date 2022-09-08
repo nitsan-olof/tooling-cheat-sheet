@@ -180,7 +180,6 @@ viewKata loggedIn kata =
             , Attr.class "kata-title"
             ]
             [ text (kata.title ++ " "), text (" " ++ kata.commandLine) ]
-        , span [] (List.map viewUnmarkedTag (Set.toList kata.tags))
         ]
 
 
