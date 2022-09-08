@@ -22,8 +22,7 @@ type alias Language =
 
 
 type alias SearchPageData =
-    { searchBarContent : String
-    , activeTags : Set String
+    { activeTags : Set String
     , selectedLanguage : Maybe Language
     }
 
@@ -49,8 +48,7 @@ type alias Kata =
 init : Model
 init =
     KataApp
-        { searchBarContent = ""
-        , activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
+        { activeTags = Set.empty -- |> Set.insert "C" |> Set.insert "Delphi"
         , selectedLanguage = Nothing
         }
         { loggedIn = False
@@ -71,7 +69,7 @@ update : Msg -> Model -> Model
 update msg (KataApp pageData appState) =
     case msg of
         SearchBarChange s ->
-            KataApp { pageData | searchBarContent = s } appState
+            KataApp pageData appState
 
         ActivateTag tag ->
             KataApp { pageData | activeTags = Set.insert tag pageData.activeTags, selectedLanguage = Just tag } appState
@@ -89,18 +87,6 @@ update msg (KataApp pageData appState) =
 view : Model -> Html Msg
 view (KataApp pageData appState) =
     let
-        searchBar =
-            div []
-                [ input
-                    [ Attr.placeholder "general search (not working yet!)"
-                    , value pageData.searchBarContent
-                    , onInput SearchBarChange
-                    , Attr.size 60
-                    ]
-                    []
-                , button [] [ text "Search" ]
-                ]
-
         allTags =
             let
                 accumulatedTags =
@@ -114,7 +100,7 @@ view (KataApp pageData appState) =
 
         tags =
             div []
-                [ text "Filter by tag"
+                [ text "Filter by language"
                 , span [] (List.map (\tag -> viewTag tag pageData.activeTags) allTags)
                 ]
 
